@@ -904,7 +904,7 @@ class PlayState extends MusicBeatState
 
 	var endingSong:Bool = false;
 
-	private function popUpScore(strumtime:Float):Void
+	private function popUpScore(daNote:Note, strumtime:Float):Void
 		{
 			var noteDiff:Float = Math.abs(strumtime - Conductor.songPosition);
 			vocals.volume = 1;
@@ -918,6 +918,7 @@ class PlayState extends MusicBeatState
 			var rating:FlxSprite = new FlxSprite();
 			var score:Int = 350;
 			var ratingMod:Float = 1;
+			var sick:Bool = true;
 	
 			var daRating:String = "sick";
 	
@@ -925,28 +926,31 @@ class PlayState extends MusicBeatState
 			{
 				daRating = 'shit';
 				score = 50;
+				sick = false;
 				ratingMod = 0;
 			}
 			else if (noteDiff > Conductor.safeZoneOffset * 0.75)
 			{
 				daRating = 'bad';
 				score = 100;
+				sick = false;
 				ratingMod = 0.4;
 			}
 			else if (noteDiff > Conductor.safeZoneOffset * 0.275)
 			{
 				daRating = 'good';
 				score = 200;
+				sick = false;
 				ratingMod = 0.75;
 			}
 			coolNoteFloat += ratingMod;
 
 			songScore += score;
 
-			if (daRating == "sick")
+			if (sick)
 			{
-				var noteSplash:NoteSplash = grpNoteSplashes.recycle(NoteSplashes);
-				noteSplash.setupNoteSplash(daNote.x, daNote.y, daNote.noteData);
+				var noteSplash:NoteSplashes = grpNoteSplashes.recycle(NoteSplashes);
+				NoteSplashes.setupNoteSplash(daNote:Note.x, daNote:Note.y, daNote.noteData);
 				// new NoteSplash(daNote.x, daNote.y, daNote.noteData);
 				grpNoteSplashes.add(noteSplash);
 			}
@@ -1235,7 +1239,7 @@ class PlayState extends MusicBeatState
 			if (!note.isSustainNote) {
 				combo += 1;
 				allNotes++;
-				popUpScore(note.strumTime);
+				popUpScore(note, note.strumTime);
 			}
 
 			if (note.noteData >= 0)
