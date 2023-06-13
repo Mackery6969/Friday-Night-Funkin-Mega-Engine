@@ -245,6 +245,16 @@ class PlayState extends MusicBeatState
 		strumLineNotes = new FlxTypedGroup<FlxSprite>();
 		add(strumLineNotes);
 
+		// fake notesplash cache type deal so that it loads in the graphic?
+
+		grpNoteSplashes = new FlxTypedGroup<NoteSplashes>();
+
+		var noteSplash:NoteSplashes = new NoteSplashes(100, 100, 0);
+		grpNoteSplashes.add(noteSplash);
+		noteSplash.alpha = 0.1;
+
+		add(grpNoteSplashes);
+
 		playerStrums = new FlxTypedGroup<FlxSprite>();
 
 		startingSong = true;
@@ -307,6 +317,7 @@ class PlayState extends MusicBeatState
 
 		startCountdown();
 
+		grpNoteSplashes.cameras = [camHUD];
 		strumLineNotes.cameras = [camHUD];
 		notes.cameras = [camHUD];
 		healthBar.cameras = [camHUD];
@@ -947,11 +958,9 @@ class PlayState extends MusicBeatState
 
 			songScore += score;
 
-			if (sick)
-			{
+			if (sick) {
 				var noteSplash:NoteSplashes = grpNoteSplashes.recycle(NoteSplashes);
-				NoteSplashes.setupNoteSplash(daNote:Note.x, daNote:Note.y, daNote.noteData);
-				// new NoteSplash(daNote.x, daNote.y, daNote.noteData);
+				noteSplash.setupNoteSplash(daNote.x, daNote.y, daNote.noteData);
 				grpNoteSplashes.add(noteSplash);
 			}
 	

@@ -2,7 +2,8 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
-import haxe.io.Path;
+import PlayState;
+import handlers.Files;
 
 class NoteSplashes extends FlxSprite
 {
@@ -10,7 +11,7 @@ class NoteSplashes extends FlxSprite
 	{
 		super(x, y);
 
-		frames = loadGraphic('assets/images/ui/noteSplashes', true, 0, 0);
+		frames = Files.sparrowAtlas('noteSplashes');
 
 		animation.addByPrefix('note1-0', 'note impact 1  blue', 24, false);
 		animation.addByPrefix('note2-0', 'note impact 1 green', 24, false);
@@ -32,7 +33,6 @@ class NoteSplashes extends FlxSprite
 		alpha = 0.6;
 
 		animation.play('note' + noteData + '-' + FlxG.random.int(0, 1), true);
-		animation.curAnim.frameRate += FlxG.random.int(-2, 2);
 		updateHitbox();
 
 		offset.set(width * 0.3, height * 0.3);
