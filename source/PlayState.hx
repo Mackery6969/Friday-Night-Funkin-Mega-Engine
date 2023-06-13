@@ -31,6 +31,7 @@ import haxe.Json;
 import lime.utils.Assets;
 import HealthIcon;
 import handlers.ClientPrefs;
+import NoteSplashes;
 
 using StringTools;
 
@@ -104,6 +105,8 @@ class PlayState extends MusicBeatState
 	public var ratingTxt:String;
 	var songRating:FlxText;
 	public var ratingColor:FlxColor;
+
+	var grpNoteSplashes:FlxTypedGroup<NoteSplashes>;
 
 	public static var campaignScore:Int = 0;
 
@@ -939,6 +942,14 @@ class PlayState extends MusicBeatState
 			coolNoteFloat += ratingMod;
 
 			songScore += score;
+
+			if (daRating == "sick")
+			{
+				var noteSplash:NoteSplash = grpNoteSplashes.recycle(NoteSplashes);
+				noteSplash.setupNoteSplash(daNote.x, daNote.y, daNote.noteData);
+				// new NoteSplash(daNote.x, daNote.y, daNote.noteData);
+				grpNoteSplashes.add(noteSplash);
+			}
 	
 			var pixelShitPart1:String = "";
 			var pixelShitPart2:String = '';
